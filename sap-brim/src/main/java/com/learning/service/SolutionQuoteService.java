@@ -1,5 +1,7 @@
 package com.learning.service;
 
+import org.springframework.http.HttpHeaders;
+
 public interface SolutionQuoteService {
 
 	/**
@@ -8,5 +10,11 @@ public interface SolutionQuoteService {
 	 * @return
 	 */
 	public String getToken();
+	
+	/**
+	 * This will create a Solution Quote in BRIM
+	 * @return
+	 */
+	public HttpHeaders getHeaders();
 
 }
