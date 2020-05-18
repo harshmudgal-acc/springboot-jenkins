@@ -24,7 +24,7 @@ public class SolutionQuoteServiceImpl implements SolutionQuoteService {
 	public String getToken() {
 		try {
 
-			final RestTemplate restTemplate = new RestTemplate();
+			final RestTemplate restTemplate = this.getRestTemplate();
 			final ResponseEntity<Map> csrfTokenExchange = restTemplate.exchange(brim_fetch_token_url, HttpMethod.GET,
 					new HttpEntity(createHttpHeaders()), Map.class);
 			if (csrfTokenExchange.getStatusCodeValue() == STATUS_OK) {
@@ -53,6 +53,11 @@ public class SolutionQuoteServiceImpl implements SolutionQuoteService {
 	@Override
 	public HttpHeaders getHeaders() {
 		return createHttpHeaders();
+	}
+	
+	public RestTemplate getRestTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
+		return restTemplate;
 	}
 
 }

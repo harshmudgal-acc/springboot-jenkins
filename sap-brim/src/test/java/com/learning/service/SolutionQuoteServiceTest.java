@@ -7,10 +7,13 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.net.util.Base64;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -28,9 +31,18 @@ public class SolutionQuoteServiceTest {
 	@Mock
 	RestTemplate restTemplate;
 
-	@Mock
+	@Autowired
 	SolutionQuoteService solutionQuoteService;
 
+	@Mock
+	SolutionQuoteService solutionQuoteService1;
+
+	@BeforeEach
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
+	
 	@Test
 	public void getTokenTest() {
 	
@@ -59,7 +71,10 @@ public class SolutionQuoteServiceTest {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.add(HttpHeaders.AUTHORIZATION, authHeader);
 		headers.add("x-csrf-token", "fetch");
-		Mockito.when(solutionQuoteService.getHeaders()).thenReturn(headers);
+		Mockito.when(solutionQuoteService1.getHeaders()).thenReturn(headers);
+		HttpHeaders header1=solutionQuoteService1.getHeaders();
+		
+		assertEquals(header1.get("x-csrf-token").get(0), headers.get("x-csrf-token").get(0));
 	}
 	
 }
